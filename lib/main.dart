@@ -11,6 +11,7 @@ import 'presentation/screens/profile_screen.dart';
 import 'presentation/screens/chat_screen.dart';
 import 'presentation/screens/matches_screen.dart';
 import 'presentation/screens/settings_screen.dart';
+import 'presentation/screens/welcome_screen.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -49,6 +50,10 @@ final _router = GoRouter(
     GoRoute(
       path: '/',
       builder: (context, state) => const SplashScreen(),
+    ),
+    GoRoute(
+      path: '/welcome',
+      builder: (context, state) => const WelcomeScreen(),
     ),
     GoRoute(
       path: '/register',

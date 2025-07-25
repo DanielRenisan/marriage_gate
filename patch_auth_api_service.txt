@@ -1,0 +1,46 @@
+Future<ApiResponse> loginWithFacebook({
+    required String accessToken,
+  }) async {
+    final data = {
+      'accessToken': accessToken,
+      'loginType': ApiConstants.loginTypeFacebook,
+    };
+
+    final response = await _apiClient.post(ApiConstants.login, data: data);
+    return response;
+  }
+=======
+
+  /// Login with Facebook
+  Future<ApiResponse> loginWithFacebook({
+    required String accessToken,
+  }) async {
+    final data = {
+      'accessToken': accessToken,
+      'loginType': ApiConstants.loginTypeFacebook,
+    };
+
+    final response = await _apiClient.post(ApiConstants.login, data: data);
+    return response;
+  }
+
+  /// Get user profile with bearer token
+  Future<ApiResponse> getUserProfile(String token) async {
+    try {
+      final response = await _apiClient.get(
+        '\${ApiConstants.baseUrl}/api/Profile/user',
+        headers: {
+          'Authorization': 'Bearer \$token',
+          'Accept': 'application/json, text/plain, */*',
+        },
+      );
+      return ApiResponse.success(response);
+    } catch (e) {
+      print("AuthApiService: Error during getUserProfile API call: \$e");
+      return ApiResponse.error(ApiError(
+        title: 'User Profile Error',
+        detail: e.toString(),
+        statusCode: 500,
+      ));
+    }
+  }

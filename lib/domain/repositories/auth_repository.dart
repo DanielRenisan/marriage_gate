@@ -3,6 +3,15 @@ abstract class AuthRepository {
   Future<void> signInWithGoogle();
   Future<void> signInWithFacebook();
   Future<void> signInWithOtp(String phone, String otp);
+  Future<void> signUp({
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String mobile,
+    required String password,
+  });
   Future<void> signOut();
   Future<bool> isSignedIn();
-} 
+
+  Future<String?> getClientToken();
+}

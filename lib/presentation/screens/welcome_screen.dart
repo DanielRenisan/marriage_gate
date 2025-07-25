@@ -1,181 +1,110 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:marriage_gate/core/constants/app_colors.dart';
+import 'package:lottie/lottie.dart';
+import 'package:marriage_gate/core/constants/image_assets.dart';
+import 'package:marriage_gate/presentation/widgets/bottom_button.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:marriage_gate/presentation/viewmodels/welcome_viewModel.dart';
 
-class WelcomeScreen extends StatefulWidget {
+class WelcomeScreen extends ConsumerWidget {
   const WelcomeScreen({super.key});
 
   @override
-  State<WelcomeScreen> createState() => _WelcomeScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final welcomeViewModel = ref.read(welcomeViewModelProvider);
 
-class _WelcomeScreenState extends State<WelcomeScreen> {
-  final PageController _pageController = PageController();
-  int _currentPage = 0;
-
-  final List<_OnboardingPageData> _pages = [
-    _OnboardingPageData(
-      icon: Icons.people_alt_rounded,
-      headline: 'Real People, Real Stories',
-      subtext: 'Verified profiles and smart matching help you meet genuine people.',
-    ),
-    _OnboardingPageData(
-      icon: Icons.favorite_rounded,
-      headline: 'Find Your Kind of Connection',
-      subtext: 'Whether you’re looking for love, fun, or friendship — we’ve got the right match for you.',
-    ),
-  ];
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: PageView.builder(
-                controller: _pageController,
-                itemCount: _pages.length,
-                onPageChanged: (index) {
-                  setState(() {
-                    _currentPage = index;
-                  });
-                },
-                itemBuilder: (context, index) {
-                  final page = _pages[index];
-                  return Container(
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xFFc3444a), Color(0xFFe8666c)],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
+      extendBodyBehindAppBar: true,
+      backgroundColor: AppColors.white,
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        color: AppColors.white,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(height: 24),
+              Image.asset(
+                PngAssets.MARRIAGE_GATE_LOGO,
+                width: 120,
+                height: 120,
+                fit: BoxFit.contain,
+              ),
+              const SizedBox(height: 24),
+              Expanded(
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        child: Lottie.asset(
+                          JsonAssets.SPLASH_SCREEN,
+                          width: 360,
+                          fit: BoxFit.contain,
+                        ),
                       ),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Spacer(flex: 2),
-                        // Placeholder icon
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.15),
-                            shape: BoxShape.circle,
-                          ),
-                          padding: const EdgeInsets.all(32),
-                          child: Icon(
-                            page.icon,
-                            size: 72,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(height: 32),
-                        // Headline
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                          child: Text(
-                            page.headline,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontFamily: 'Poppins',
-                              fontSize: 26,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        // Subtext
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                          child: Text(
-                            page.subtext,
+                      Column(
+                        children: [
+                          const Text(
+                            "Find exactly the",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontFamily: 'Poppins',
-                              fontSize: 16,
-                              color: Colors.white.withOpacity(0.9),
+                              fontFamily: 'Sriracha',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: AppColors.primary,
                             ),
                           ),
-                        ),
-                        const Spacer(flex: 3),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
-            // Page indicators
-            Padding(
-              padding: const EdgeInsets.only(top: 16, bottom: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(_pages.length, (index) {
-                  return AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    margin: const EdgeInsets.symmetric(horizontal: 6),
-                    width: _currentPage == index ? 16 : 8,
-                    height: 8,
-                    decoration: BoxDecoration(
-                      color: _currentPage == index
-                          ? Colors.white
-                          : Colors.white.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                  );
-                }),
-              ),
-            ),
-            // Fixed buttons
-            Padding(
-              padding: const EdgeInsets.fromLTRB(32, 8, 32, 24),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(
-                    width: double.infinity,
-                    height: 48,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: const Color(0xFFc3444a),
-                        textStyle: const TextStyle(
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(32),
-                        ),
+                          const SizedBox(height: 4),
+                          const Text(
+                            "Right partner for you",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'Sriracha',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                        ],
                       ),
-                      onPressed: () {
-                        context.go('/register');
-                      },
-                      child: const Text('Get Started'),
-                    ),
+                    ],
                   ),
-                  const SizedBox(height: 12),
-                  TextButton(
-                    onPressed: () {
-                      context.go('/login');
-                    },
-                    child: const Text(
-                      'Already have an account? Login',
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
+            ],
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            BottomButton(
+              text: 'Get Started',
+              onPressed: () {
+                welcomeViewModel.showGetStartedSheet(context);
+              },
+              textColor: AppColors.white,
+              borderRadius: 16,
+              margin: EdgeInsets.zero,
+            ),
+            const SizedBox(height: 12),
+            BottomButton(
+              text: 'Already have an account? Login',
+              onPressed: () {
+                context.go('/login');
+              },
+              backgroundColor: AppColors.white,
+              textColor: AppColors.primary,
+              borderRadius: 16,
+              margin: EdgeInsets.zero,
+              border: const BorderSide(color: AppColors.primary, width: 1),
             ),
           ],
         ),
@@ -183,14 +112,3 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     );
   }
 }
-
-class _OnboardingPageData {
-  final IconData icon;
-  final String headline;
-  final String subtext;
-  const _OnboardingPageData({
-    required this.icon,
-    required this.headline,
-    required this.subtext,
-  });
-} 

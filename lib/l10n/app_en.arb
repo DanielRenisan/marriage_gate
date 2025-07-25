@@ -7,5 +7,12 @@
   "matches": "Matches",
   "settings": "Settings",
   "headline": "Real People, Real Stories",
-  "subtext": "Verified profiles and smart matching help you meet genuine people."
-} 
+  "subtext": "Verified profiles and smart matching help you meet genuine people.",
+  "alreadyHaveAccount": "Already have an account?",
+  "welcomeBack": "Welcome Back",
+  "signInToContinue": "Sign in to continue",
+  "email": "Email",
+  "password": "Password",
+  "forgotPassword": "Forgot Password?",
+  "signIn": "Sign In"
+}

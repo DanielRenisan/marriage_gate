@@ -29,12 +29,12 @@ class _SplashScreenState extends State<SplashScreen> {
         color: Colors.white, // Fully white background
         child: Center(
           child: Image.asset(
-            'assets/images/marriagegate_logo.png',
-            width: 180,
+            'assets/images/png/marriagegate_logo.png',
+            width: 320,
             fit: BoxFit.contain,
           ),
         ),
       ),
     );
   }
-} 
+}
